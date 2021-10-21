@@ -24,25 +24,13 @@ namespace Lab3_Group1V2.Controllers
             return View(await _context.Users.ToListAsync());
         }
 
-        public IActionResult Login()
+        public IActionResult Login([Bind("UserId,Password")] User user)
         {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Login([Bind] User user)
-        {
-            db dbop = new db();
-            int res = dbop.LoginCheck(user);
-            if (res == 1)
+            if (!ModelState.IsValid)
             {
-                TempData["msg"] = "You have logged in";
+                return View(user); //Redirects to Login Page
             }
-            else
-            {
-                TempData["msg"] = "User id or Password is wrong.!";
-            }
-            return View();
+            return View(); //Redirects to Moview Page
         }
 
         // GET: Users/Details/5
